@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	 <CustomLevels>
+    <CustomLevel name="MOVE" intLevel="1000" />
+  </CustomLevels>
+	<Properties>
+		<Property name="filename">./logs</Property>
+	</Properties>
+	<Appenders>
+		<RollingFile name="file" fileName="${filename}/LogChess.Log"
+			filePattern="${filename}/Log - %d{HH_mm}.Log">
+			<PatternLayout>
+				<pattern>%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</pattern>
+			</PatternLayout>
+			<SizeBasedTriggeringPolicy size="500 MB" />
+		</RollingFile>
+		<RollingFile name="file_trace" fileName="${filename}/traces.Log"
+			filePattern="${filename}/move - %d{HH_mm}.Log">
+			<PatternLayout>
+				<pattern>%d{HH:mm:ss} %msg%n </pattern>
+			</PatternLayout>
+			<SizeBasedTriggeringPolicy size="500 MB" />
+		</RollingFile>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<Logger name="engine" level="trace" additivity="false">
+			<AppenderRef ref="file_trace" />
+			<AppenderRef ref="Console" />
+		</Logger>
+		<Root level="debug">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="file" />
+		</Root>
+	</Loggers>
+</Configuration>
